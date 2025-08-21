@@ -1,5 +1,7 @@
 🚀 Ideas for Improving the Solution
 
+Recording -https://drive.google.com/file/d/1fM-x-cDApE8SlMGU8R304UGabtiN5BEZ/view?usp=sharing
+
 Partial Interval Handling
 
 Currently, uptime/downtime might be overcounted if a store changes status in the middle of a business hour window.
