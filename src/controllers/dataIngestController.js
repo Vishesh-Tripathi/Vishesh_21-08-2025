@@ -4,15 +4,11 @@ import StoreStatus from "../models/StoreStatus.js";
 import BusinessHours from "../models/BusinessHours.js";
 import StoreTimezone from "../models/StoreTimezone.js";
 
-/**
- * Ingest Store Status CSV
- * Expected columns: store_id, status, timestamp_utc
- */
 export const ingestStoreStatus = async (req, res) => {
   try {
     const results = [];
 
-    fs.createReadStream(req.file.path) // file uploaded by multer
+    fs.createReadStream(req.file.path)
       .pipe(csvParser())
       .on("data", (row) => {
         results.push({
@@ -30,10 +26,6 @@ export const ingestStoreStatus = async (req, res) => {
   }
 };
 
-/**
- * Ingest Business Hours CSV
- * Expected columns: store_id, dayOfWeek, start_time_local, end_time_local
- */
 export const ingestBusinessHours = async (req, res) => {
   try {
     const results = [];
@@ -57,10 +49,6 @@ export const ingestBusinessHours = async (req, res) => {
   }
 };
 
-/**
- * Ingest Store Timezone CSV
- * Expected columns: store_id, timezone
- */
 export const ingestStoreTimezone = async (req, res) => {
   try {
     const results = [];

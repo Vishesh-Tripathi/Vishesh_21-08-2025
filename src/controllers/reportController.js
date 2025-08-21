@@ -17,7 +17,7 @@ export const getReportController = async (req, res) => {
     if (reportData.status === "Running") {
       res.json({ status: "Running" });
     } else {
-      res.download(reportData.file_path); // send CSV
+      res.download(reportData.file_path);
     }
   } catch (err) {
     res.status(500).json({ error: err.message });

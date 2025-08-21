@@ -2,15 +2,6 @@ import moment from "moment-timezone";
 import fs from "fs";
 import { writeToPath } from "fast-csv";
 
-/**
- * Calculate uptime/downtime for a store within a specified time window
- * @param {Array} statuses - Array of store status objects with local_time and status
- * @param {Array} businessHours - Array of business hours for the store
- * @param {string} timezone - Store timezone string
- * @param {Date} maxTimestamp - Reference timestamp (current time)
- * @param {string} windowType - Type of window: 'hour', 'day', or 'week'
- * @returns {Object} Object containing uptimeMinutes, downtimeMinutes, uptimeHours, downtimeHours
- */
 export function calcUptime(statuses, businessHours, timezone, maxTimestamp, windowType) {
   if (!statuses.length) {
     return {
@@ -21,14 +12,12 @@ export function calcUptime(statuses, businessHours, timezone, maxTimestamp, wind
     };
   }
 
-  // Define start of window
   let end = moment.utc(maxTimestamp).tz(timezone);
   let start;
   if (windowType === "hour") start = end.clone().subtract(1, "hours");
   if (windowType === "day") start = end.clone().subtract(1, "days");
   if (windowType === "week") start = end.clone().subtract(7, "days");
 
-  // Filter statuses inside this window
   let filtered = statuses.filter(
     s => s.local_time.isBetween(start, end, null, "[]")
   );

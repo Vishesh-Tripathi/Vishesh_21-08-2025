@@ -14,30 +14,21 @@ import {
   getStoreTimezone 
 } from "./utils.js";
 
-/**
- * Trigger a new report generation
- */
 export const triggerReport = async () => {
   const reportId = uuidv4();
 
-  // Create a new Report entry with status "Running"
   await Report.create({ report_id: reportId, status: "Running" });
 
-  // Run calculations in background
   setTimeout(async () => {
     try {
-      // 1. Fetch all data
       const statuses = await StoreStatus.find({});
       const businessHours = await BusinessHours.find({});
       const timezones = await StoreTimezone.find({});
 
-      // 2. Find the max timestamp (current time reference)
       const maxTimestamp = findMaxTimestamp(statuses);
 
-      // 3. Get unique store IDs
       const uniqueStoreIds = getUniqueStoreIds(statuses);
 
-      // 4. Prepare results
       let results = [];
 
       for (let storeId of uniqueStoreIds) {
@@ -45,10 +36,8 @@ export const triggerReport = async () => {
         let storeHours = filterByStoreId(businessHours, storeId);
         let storeTimezone = getStoreTimezone(timezones, storeId);
 
-        // Convert timestamps to local timezone
         storeStatuses = convertToLocalTime(storeStatuses, storeTimezone);
 
-        // Calculate uptime/downtime
         const lastHour = calcUptime(
           storeStatuses,
           storeHours,
@@ -82,11 +71,9 @@ export const triggerReport = async () => {
         });
       }
 
-      // 5. Save results as CSV
       const filePath = `./src/reports/${reportId}.csv`;
       await saveAsCSV(results, filePath);
 
-      // 6. Update Report status
       await Report.updateOne(
         { report_id: reportId },
         { status: "Complete", file_path: filePath }
@@ -104,9 +91,6 @@ export const triggerReport = async () => {
   return reportId;
 };
 
-/**
- * Get report status or CSV path
- */
 export const getReport = async (reportId) => {
   const report = await Report.findOne({ report_id: reportId });
 
