@@ -1,0 +1,26 @@
+{
+  "name": "storemonitor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vishesh-Tripathi/Vishesh_21-08-2025.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Vishesh-Tripathi/Vishesh_21-08-2025/issues"
+  },
+  "homepage": "https://github.com/Vishesh-Tripathi/Vishesh_21-08-2025#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "fast-csv": "^5.0.5",
+    "mongoose": "^8.17.2"
+  }
+}
